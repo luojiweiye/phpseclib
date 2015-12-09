@@ -67,7 +67,7 @@ class RSA
      * Use {@link http://en.wikipedia.org/wiki/Optimal_Asymmetric_Encryption_Padding Optimal Asymmetric Encryption Padding}
      * (OAEP) for encryption / decryption.
      *
-     * Uses sha1 by default.
+     * Uses sha256 by default.
      *
      * @see self::setHash()
      * @see self::setMGFHash()
@@ -98,7 +98,7 @@ class RSA
     /**
      * Use the Probabilistic Signature Scheme for signing
      *
-     * Uses sha1 by default.
+     * Uses sha256 by default.
      *
      * @see self::setSaltLength()
      * @see self::setMGFHash()
@@ -394,10 +394,10 @@ class RSA
     {
         self::_initialize_static_variables();
 
-        $this->hash = new Hash('sha1');
+        $this->hash = new Hash('sha256');
         $this->hLen = $this->hash->getLength();
-        $this->hashName = 'sha1';
-        $this->mgfHash = new Hash('sha1');
+        $this->hashName = 'sha256';
+        $this->mgfHash = new Hash('sha256');
         $this->mgfHLen = $this->mgfHash->getLength();
     }
 
@@ -415,7 +415,7 @@ class RSA
      * @param int $timeout
      * @param array $p
      */
-    static function createKey($bits = 1024, $timeout = false, $partial = array())
+    static function createKey($bits = 2048, $timeout = false, $partial = array())
     {
         self::_initialize_static_variables();
 
@@ -1234,7 +1234,7 @@ class RSA
      * Determines which hashing function should be used
      *
      * Used with signature production / verification and (if the encryption mode is self::ENCRYPTION_OAEP) encryption and
-     * decryption.  If $hash isn't supported, sha1 is used.
+     * decryption.  If $hash isn't supported, sha256 is used.
      *
      * @access public
      * @param string $hash
@@ -1253,8 +1253,8 @@ class RSA
                 $this->hashName = $hash;
                 break;
             default:
-                $this->hash = new Hash('sha1');
-                $this->hashName = 'sha1';
+                $this->hash = new Hash('sha256');
+                $this->hashName = 'sha256';
         }
         $this->hLen = $this->hash->getLength();
     }
@@ -1281,7 +1281,7 @@ class RSA
                 $this->mgfHash = new Hash($hash);
                 break;
             default:
-                $this->mgfHash = new Hash('sha1');
+                $this->mgfHash = new Hash('sha256');
         }
         $this->mgfHLen = $this->mgfHash->getLength();
     }
